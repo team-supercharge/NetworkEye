@@ -8,13 +8,18 @@
 
 #import "NEHTTPModel.h"
 
+#import "NSURLRequest+HAR.h"
+#import "NSURLResponse+HAR.h"
+#import "NSDate+ISO8601.h"
+#import "HAR.h"
+
 @implementation NEHTTPModel
 @synthesize ne_request,ne_response;
 
 -(void)setNe_request:(NSURLRequest *)ne_request_new{
     ne_request=ne_request_new;
     self.requestURLString=[ne_request.URL absoluteString];
-    
+
     switch (ne_request.cachePolicy) {
         case 0:
             self.requestCachePolicy=@"NSURLRequestUseProtocolCachePolicy";
@@ -38,10 +43,10 @@
             self.requestCachePolicy=@"";
             break;
     }
-    
+
     self.requestTimeoutInterval=[[NSString stringWithFormat:@"%.1lf",ne_request.timeoutInterval] doubleValue];
     self.requestHTTPMethod=ne_request.HTTPMethod;
-    
+
     for (NSString *key in [ne_request.allHTTPHeaderFields allKeys]) {
         self.requestAllHTTPHeaderFields=[NSString stringWithFormat:@"%@%@:%@\n",self.requestAllHTTPHeaderFields,key,[ne_request.allHTTPHeaderFields objectForKey:key]];
     }
@@ -66,26 +71,33 @@
             self.requestHTTPBody=[self.requestHTTPBody substringToIndex:self.requestHTTPBody.length-1];
         }
     }
-    
+
+}
+
+- (NSHTTPURLResponse *)ne_response {
+    if (!ne_response) {
+        ne_response = [NSHTTPURLResponse new];
+    }
+    return ne_response;
 }
 
 - (void)setNe_response:(NSHTTPURLResponse *)ne_response_new {
-    
+
     ne_response=ne_response_new;
-    
+
     self.responseMIMEType=@"";
     self.responseExpectedContentLength=@"";
     self.responseTextEncodingName=@"";
     self.responseSuggestedFilename=@"";
     self.responseStatusCode=200;
     self.responseAllHeaderFields=@"";
-    
+
     self.responseMIMEType=[ne_response MIMEType];
     self.responseExpectedContentLength=[NSString stringWithFormat:@"%lld",[ne_response expectedContentLength]];
     self.responseTextEncodingName=[ne_response textEncodingName];
     self.responseSuggestedFilename=[ne_response suggestedFilename];
     self.responseStatusCode=(int)ne_response.statusCode;
-    
+
     for (NSString *key in [ne_response.allHeaderFields allKeys]) {
         NSString *headerFieldValue=[ne_response.allHeaderFields objectForKey:key];
         if ([key isEqualToString:@"Content-Security-Policy"]) {
@@ -94,15 +106,53 @@
             }
         }
         self.responseAllHeaderFields=[NSString stringWithFormat:@"%@%@:%@\n",self.responseAllHeaderFields,key,headerFieldValue];
-        
+
     }
-    
+
     if (self.responseAllHeaderFields.length>1) {
         if ([[self.responseAllHeaderFields substringFromIndex:self.responseAllHeaderFields.length-1] isEqualToString:@"\n"]) {
             self.responseAllHeaderFields=[self.responseAllHeaderFields substringToIndex:self.responseAllHeaderFields.length-1];
         }
     }
-    
+
+}
+
+// HAR export
+- (NSURL *)harURL {
+    return [HAR generateWithModelObjects:@[self]];
+}
+
+- (NSDictionary *)harEntry {
+    NSDictionary *request = [ne_request HARRepresentation];
+    NSDictionary *response = [ne_response HARRepresentationWithData:_receiveData];
+
+    NSTimeInterval seconds = [_endDate timeIntervalSinceDate:_startDate];
+    NSTimeInterval wait = seconds * 1000.0;
+
+    NSDictionary *timings = @{
+                              //@"blocked": @(-1.0),
+                              //@"dns": @(-1.0),
+                              //@"connect": @(-1.0),
+                              @"send": @(-1.0),
+                              @"wait": @(wait),
+                              @"receive": @(-1.0),
+                              //@"ssl": @(-1.0),
+                              //@"comment": @"",
+                              };
+
+    NSDictionary *anEntry = @{
+                              @"pageref": @"page_1",
+                              @"startedDateTime": [_startDate ISO8601Representation],
+                              @"time": @(wait),
+                              @"request": request,
+                              @"response": response,
+                              @"cache": @{},
+                              @"timings": timings,
+                              //@"serverIPAddress": @"",
+                              //@"connection": @"",
+                              //@"comment": @"",
+                              };
+    return anEntry;
 }
 
 @end

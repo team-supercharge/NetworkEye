@@ -24,9 +24,14 @@
 		0A4EF89A1BEB6735000D2D7E /* NEShakeGestureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4EF88A1BEB6735000D2D7E /* NEShakeGestureManager.m */; };
 		0A4EF89F1BEB673D000D2D7E /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4EF89E1BEB673D000D2D7E /* DemoViewController.m */; };
 		0A4EF8A11BEB676C000D2D7E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EF8A01BEB676C000D2D7E /* libsqlite3.0.tbd */; };
-		0ADE8CFA1BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADE8CF91BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.m */; };
 		18EBE1D31D6662D26CDE658E /* libPods-NetworkEye.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B0A88B796892B331322D42D /* libPods-NetworkEye.a */; };
-		A18C22DD1D98239A008E40C6 /* NEMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A18C22DC1D98239A008E40C6 /* NEMapViewController.m */; };
+		3F209A9C1F4C332500C52086 /* NEHTTPWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F209A9B1F4C332500C52086 /* NEHTTPWindowManager.m */; };
+		3FD5DCEF1F4ACC9A002C5877 /* HAR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD5DCE81F4ACC9A002C5877 /* HAR.m */; };
+		3FD5DCF01F4ACC9A002C5877 /* NSDate+ISO8601.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD5DCEA1F4ACC9A002C5877 /* NSDate+ISO8601.m */; };
+		3FD5DCF11F4ACC9A002C5877 /* NSURLRequest+HAR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD5DCEC1F4ACC9A002C5877 /* NSURLRequest+HAR.m */; };
+		3FD5DCF21F4ACC9A002C5877 /* NSURLResponse+HAR.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD5DCEE1F4ACC9A002C5877 /* NSURLResponse+HAR.m */; };
+		3FD5DCF51F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD5DCF41F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.m */; };
+		3FD5DCF91F4ACD24002C5877 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD5DCF81F4ACD24002C5877 /* GTMNSString+URLArguments.m */; };
 		EE6CCB621DB1BB6D00EAA45F /* NEKeyboardShortcutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6CCB611DB1BB6D00EAA45F /* NEKeyboardShortcutManager.m */; };
 /* End PBXBuildFile section */
 
@@ -81,13 +86,25 @@
 		0A4EF89D1BEB673D000D2D7E /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		0A4EF89E1BEB673D000D2D7E /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		0A4EF8A01BEB676C000D2D7E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		0ADE8CF81BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEHTTPEyeSettingsViewController.h; sourceTree = "<group>"; };
-		0ADE8CF91BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEHTTPEyeSettingsViewController.m; sourceTree = "<group>"; };
 		1B0A88B796892B331322D42D /* libPods-NetworkEye.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NetworkEye.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2375E39544CB697EF96E7ACF /* Pods-NetworkEye.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkEye.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NetworkEye/Pods-NetworkEye.debug.xcconfig"; sourceTree = "<group>"; };
+		3F209A9A1F4C332400C52086 /* NEHTTPWindowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEHTTPWindowManager.h; sourceTree = "<group>"; };
+		3F209A9B1F4C332500C52086 /* NEHTTPWindowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEHTTPWindowManager.m; sourceTree = "<group>"; };
+		3FD5DCE71F4ACC9A002C5877 /* HAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAR.h; sourceTree = "<group>"; };
+		3FD5DCE81F4ACC9A002C5877 /* HAR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAR.m; sourceTree = "<group>"; };
+		3FD5DCE91F4ACC9A002C5877 /* NSDate+ISO8601.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ISO8601.h"; sourceTree = "<group>"; };
+		3FD5DCEA1F4ACC9A002C5877 /* NSDate+ISO8601.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ISO8601.m"; sourceTree = "<group>"; };
+		3FD5DCEB1F4ACC9A002C5877 /* NSURLRequest+HAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+HAR.h"; sourceTree = "<group>"; };
+		3FD5DCEC1F4ACC9A002C5877 /* NSURLRequest+HAR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+HAR.m"; sourceTree = "<group>"; };
+		3FD5DCED1F4ACC9A002C5877 /* NSURLResponse+HAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+HAR.h"; sourceTree = "<group>"; };
+		3FD5DCEE1F4ACC9A002C5877 /* NSURLResponse+HAR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+HAR.m"; sourceTree = "<group>"; };
+		3FD5DCF31F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSDictionary+URLArguments.h"; sourceTree = "<group>"; };
+		3FD5DCF41F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSDictionary+URLArguments.m"; sourceTree = "<group>"; };
+		3FD5DCF71F4ACD24002C5877 /* GTMNSString+URLArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+URLArguments.h"; sourceTree = "<group>"; };
+		3FD5DCF81F4ACD24002C5877 /* GTMNSString+URLArguments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+URLArguments.m"; sourceTree = "<group>"; };
+		3FD5DCFA1F4ACD89002C5877 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		3FD5DCFB1F4ACDB3002C5877 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGarbageCollection.h; sourceTree = "<group>"; };
 		78F596A72B3544114EDC0FEA /* Pods-NetworkEye.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkEye.release.xcconfig"; path = "Pods/Target Support Files/Pods-NetworkEye/Pods-NetworkEye.release.xcconfig"; sourceTree = "<group>"; };
-		A18C22DB1D98239A008E40C6 /* NEMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEMapViewController.h; sourceTree = "<group>"; };
-		A18C22DC1D98239A008E40C6 /* NEMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEMapViewController.m; sourceTree = "<group>"; };
 		EE6CCB601DB1BB6D00EAA45F /* NEKeyboardShortcutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEKeyboardShortcutManager.h; sourceTree = "<group>"; };
 		EE6CCB611DB1BB6D00EAA45F /* NEKeyboardShortcutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEKeyboardShortcutManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,12 +208,8 @@
 				0A4EF8801BEB6735000D2D7E /* NEHTTPEye.m */,
 				0A4EF8811BEB6735000D2D7E /* NEHTTPEyeDetailViewController.h */,
 				0A4EF8821BEB6735000D2D7E /* NEHTTPEyeDetailViewController.m */,
-				A18C22DB1D98239A008E40C6 /* NEMapViewController.h */,
-				A18C22DC1D98239A008E40C6 /* NEMapViewController.m */,
 				0A4EF8831BEB6735000D2D7E /* NEHTTPEyeViewController.h */,
 				0A4EF8841BEB6735000D2D7E /* NEHTTPEyeViewController.m */,
-				0ADE8CF81BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.h */,
-				0ADE8CF91BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.m */,
 				0A4EF8851BEB6735000D2D7E /* NEHTTPModel.h */,
 				0A4EF8861BEB6735000D2D7E /* NEHTTPModel.m */,
 				0A4EF8871BEB6735000D2D7E /* NEHTTPModelManager.h */,
@@ -209,6 +222,22 @@
 				0A1202E21BF097BC00B710A9 /* NEURLSessionConfiguration.m */,
 				EE6CCB601DB1BB6D00EAA45F /* NEKeyboardShortcutManager.h */,
 				EE6CCB611DB1BB6D00EAA45F /* NEKeyboardShortcutManager.m */,
+				3FD5DCFA1F4ACD89002C5877 /* GTMDefines.h */,
+				3FD5DCFB1F4ACDB3002C5877 /* GTMGarbageCollection.h */,
+				3FD5DCF31F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.h */,
+				3FD5DCF41F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.m */,
+				3FD5DCF71F4ACD24002C5877 /* GTMNSString+URLArguments.h */,
+				3FD5DCF81F4ACD24002C5877 /* GTMNSString+URLArguments.m */,
+				3FD5DCE71F4ACC9A002C5877 /* HAR.h */,
+				3FD5DCE81F4ACC9A002C5877 /* HAR.m */,
+				3FD5DCE91F4ACC9A002C5877 /* NSDate+ISO8601.h */,
+				3FD5DCEA1F4ACC9A002C5877 /* NSDate+ISO8601.m */,
+				3FD5DCEB1F4ACC9A002C5877 /* NSURLRequest+HAR.h */,
+				3FD5DCEC1F4ACC9A002C5877 /* NSURLRequest+HAR.m */,
+				3FD5DCED1F4ACC9A002C5877 /* NSURLResponse+HAR.h */,
+				3FD5DCEE1F4ACC9A002C5877 /* NSURLResponse+HAR.m */,
+				3F209A9A1F4C332400C52086 /* NEHTTPWindowManager.h */,
+				3F209A9B1F4C332500C52086 /* NEHTTPWindowManager.m */,
 			);
 			path = NetworkEye;
 			sourceTree = "<group>";
@@ -463,17 +492,22 @@
 				0A1202E31BF097BC00B710A9 /* NEURLSessionConfiguration.m in Sources */,
 				0A4EF8951BEB6735000D2D7E /* NEHTTPEye.m in Sources */,
 				0A4EF89A1BEB6735000D2D7E /* NEShakeGestureManager.m in Sources */,
-				A18C22DD1D98239A008E40C6 /* NEMapViewController.m in Sources */,
+				3FD5DCEF1F4ACC9A002C5877 /* HAR.m in Sources */,
+				3FD5DCF51F4ACCC6002C5877 /* GTMNSDictionary+URLArguments.m in Sources */,
 				0A4EF8481BEB66FF000D2D7E /* AppDelegate.m in Sources */,
 				0A4EF89F1BEB673D000D2D7E /* DemoViewController.m in Sources */,
 				0A4EF8451BEB66FF000D2D7E /* main.m in Sources */,
+				3FD5DCF91F4ACD24002C5877 /* GTMNSString+URLArguments.m in Sources */,
 				0A4EF8981BEB6735000D2D7E /* NEHTTPModel.m in Sources */,
+				3FD5DCF21F4ACC9A002C5877 /* NSURLResponse+HAR.m in Sources */,
 				0A4EF8961BEB6735000D2D7E /* NEHTTPEyeDetailViewController.m in Sources */,
+				3FD5DCF11F4ACC9A002C5877 /* NSURLRequest+HAR.m in Sources */,
 				EE6CCB621DB1BB6D00EAA45F /* NEKeyboardShortcutManager.m in Sources */,
 				0A4EF8971BEB6735000D2D7E /* NEHTTPEyeViewController.m in Sources */,
+				3F209A9C1F4C332500C52086 /* NEHTTPWindowManager.m in Sources */,
 				0A4EF8991BEB6735000D2D7E /* NEHTTPModelManager.m in Sources */,
-				0ADE8CFA1BF4999A0096A1E5 /* NEHTTPEyeSettingsViewController.m in Sources */,
 				0A09FAC01BF6FC3F0009EC53 /* UIWindow+NEExtension.m in Sources */,
+				3FD5DCF01F4ACC9A002C5877 /* NSDate+ISO8601.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

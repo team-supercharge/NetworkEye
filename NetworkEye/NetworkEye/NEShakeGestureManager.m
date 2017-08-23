@@ -10,6 +10,8 @@
 
 #import <UIKit/UIKit.h>
 #import "NEHTTPEyeViewController.h"
+#import "NEHTTPWindowManager.h"
+#import "NEHTTPModelManager.h"
 
 @interface NEShakeGestureManager ()<UIAlertViewDelegate>
 
@@ -48,6 +50,7 @@
         _alertView.delegate = self;
         _alertView.title = @"Network Eye";
         [_alertView addButtonWithTitle:@"Go NetworkEye"];
+        [_alertView addButtonWithTitle:@"Clear NetworkEye Cache"];
         [_alertView addButtonWithTitle:@"Cancel"];
         [_alertView setCancelButtonIndex:[_alertView numberOfButtons]-1];
     }
@@ -60,8 +63,8 @@
 - (void)presentInformationViewController {
     
     NEHTTPEyeViewController *viewController = [[NEHTTPEyeViewController alloc] init];
-    [[[[[UIApplication sharedApplication] delegate] window] rootViewController]
-     presentViewController:viewController animated:YES completion:nil];
+    UIViewController *windowViewController = [[NEHTTPWindowManager sharedManager] presentWindowInLevel:UIWindowLevelNormal];
+    [windowViewController presentViewController:viewController animated:YES completion:nil];
     
 }
 
@@ -73,6 +76,16 @@
     if ([buttonTitle isEqualToString:@"Go NetworkEye"]) {
         [self presentInformationViewController];
     }
+    if ([buttonTitle isEqualToString:@"Clear NetworkEye Cache"]) {
+        [self clearCache];
+    }
+}
+
+#pragma mark - Clear Cache
+
+- (void)clearCache {
+    [[NEHTTPModelManager defaultManager] removeAllMapObjects];
+    [[NEHTTPModelManager defaultManager] deleteAllItem];
 }
 
 @end

@@ -8,21 +8,25 @@
 
 #import "UIWindow+NEExtension.h"
 #import "NEShakeGestureManager.h"
+#import "NEHTTPEye.h"
 
 @implementation UIWindow (NEExtension)
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-#if defined(DEBUG)||defined(_DEBUG)
- 
+	if (![NEHTTPEye isEnabled]) {
+		return;
+	}
+	
     if (event.type == UIEventTypeMotion && event.subtype == UIEventSubtypeMotionShake) {
         [[NEShakeGestureManager defaultManager] showAlertView];
     }
-#endif
   
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-#if defined(DEBUG)||defined(_DEBUG)
+	if (![NEHTTPEye isEnabled]) {
+		return;
+	}
  
     int twoFingerTag=NO;
     if ([event allTouches].count==2) {
@@ -37,7 +41,6 @@
     if (twoFingerTag) {
         [[NEShakeGestureManager defaultManager] showAlertView];
     }
-#endif
   
 }
 

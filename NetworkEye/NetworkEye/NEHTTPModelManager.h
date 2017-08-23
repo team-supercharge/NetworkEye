@@ -18,6 +18,7 @@
 
 @property(nonatomic,strong) NSString *sqlitePassword;
 @property(nonatomic,assign) int saveRequestMaxCount;
+@property(nonatomic,strong) NSString *serverFilter;
 
 /**
  *  get recorded requests 's SQLite filename

@@ -97,8 +97,9 @@
 #pragma clang diagnostic pop
    
     ne_HTTPModel=[[NEHTTPModel alloc] init];
-    ne_HTTPModel.ne_request=self.request;
-    ne_HTTPModel.startDateString=[self stringWithDate:[NSDate date]];
+	ne_HTTPModel.ne_request=self.request;
+	ne_HTTPModel.startDate=[NSDate date];
+	ne_HTTPModel.startDateString=[self stringWithDate:ne_HTTPModel.startDate];
 
     NSTimeInterval myID=[[NSDate date] timeIntervalSince1970];
     double randomNum=((double)(arc4random() % 100))/10000;
@@ -107,10 +108,12 @@
 
 - (void)stopLoading {
     [self.connection cancel];
-    ne_HTTPModel.ne_response=(NSHTTPURLResponse *)self.response;
-    ne_HTTPModel.endDateString=[self stringWithDate:[NSDate date]];
+	ne_HTTPModel.ne_response=(NSHTTPURLResponse *)self.response;
+    ne_HTTPModel.endDate=[NSDate date];
+	ne_HTTPModel.endDateString=[self stringWithDate:ne_HTTPModel.endDate];
     NSString *mimeType = self.response.MIMEType;
     if ([mimeType isEqualToString:@"application/json"]) {
+		ne_HTTPModel.receiveData = self.data;
         ne_HTTPModel.receiveJSONData = [self responseJSONFromData:self.data];
     } else if ([mimeType isEqualToString:@"text/javascript"]) {
         // try to parse json if it is jsonp request
@@ -125,15 +128,17 @@
                 range.location++;
                 range.length = [jsonString length] - range.location - 2; // removes parens and trailing semicolon
                 jsonString = [jsonString substringWithRange:range];
-                NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+				NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+				ne_HTTPModel.receiveData = jsonData;
                 ne_HTTPModel.receiveJSONData = [self responseJSONFromData:jsonData];
             }
         }
         
-    }else if ([mimeType isEqualToString:@"application/xml"] ||[mimeType isEqualToString:@"text/xml"]){
+	}else if ([mimeType isEqualToString:@"application/xml"] ||[mimeType isEqualToString:@"text/xml"]){
+		ne_HTTPModel.receiveData = self.data;
         NSString *xmlString = [[NSString alloc]initWithData:self.data encoding:NSUTF8StringEncoding];
-        if (xmlString && xmlString.length>0) {
-            ne_HTTPModel.receiveJSONData = xmlString;//example http://webservice.webxml.com.cn/webservices/qqOnlineWebService.asmx/qqCheckOnline?qqCode=2121
+		if (xmlString && xmlString.length>0) {
+			ne_HTTPModel.receiveJSONData = xmlString;//example http://webservice.webxml.com.cn/webservices/qqOnlineWebService.asmx/qqCheckOnline?qqCode=2121
         }
     }
     double flowCount=[[[NSUserDefaults standardUserDefaults] objectForKey:@"flowCount"] doubleValue];

@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NSURLRequest *ne_request;
 @property (nonatomic,strong) NSHTTPURLResponse *ne_response;
 @property (nonatomic,assign) double myID;
+@property (nonatomic,strong) NSDate *startDate;
 @property (nonatomic,strong) NSString *startDateString;
+@property (nonatomic,strong) NSDate *endDate;
 @property (nonatomic,strong) NSString *endDateString;
 
 //request
@@ -33,10 +35,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,nullable,strong) NSString *responseAllHeaderFields;
 
 //JSONData
+@property (nonatomic,strong) NSData *receiveData;
 @property (nonatomic,strong) NSString *receiveJSONData;
 
 @property (nonatomic,strong) NSString *mapPath;
 @property (nonatomic,strong) NSString *mapJSONData;
+
+// HAR export
+@property (nonatomic,strong,readonly) NSURL *harURL;
+@property (nonatomic,strong,readonly) NSDictionary *harEntry;
 
 @end
 NS_ASSUME_NONNULL_END

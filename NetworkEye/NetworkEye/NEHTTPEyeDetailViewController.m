@@ -7,7 +7,6 @@
 //
 
 #import "NEHTTPEyeDetailViewController.h"
-#import "NEMapViewController.h"
 #import "NEHTTPModel.h"
 @interface NEHTTPEyeDetailViewController (){
 
@@ -42,13 +41,13 @@
     [backBt addTarget:self action:@selector(backBtAction) forControlEvents:UIControlEventTouchUpInside];
     [bar addSubview:backBt];
     
-    UIButton *mapBt=[UIButton buttonWithType:UIButtonTypeCustom];
-    mapBt.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 27, 50, 30);
-    [mapBt setTitle:@"map" forState:UIControlStateNormal];
-    mapBt.titleLabel.font=[UIFont systemFontOfSize:13];
-    [mapBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [mapBt addTarget:self action:@selector(rightAction) forControlEvents:UIControlEventTouchUpInside];
-    [bar addSubview:mapBt];
+    UIButton *shareBt=[UIButton buttonWithType:UIButtonTypeCustom];
+    shareBt.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 27, 50, 30);
+    [shareBt setTitle:@"share" forState:UIControlStateNormal];
+    shareBt.titleLabel.font=[UIFont systemFontOfSize:13];
+    [shareBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [shareBt addTarget:self action:@selector(rightAction) forControlEvents:UIControlEventTouchUpInside];
+    [bar addSubview:shareBt];
     
     UILabel *titleText = [[UILabel alloc] initWithFrame: CGRectMake(([[UIScreen mainScreen] bounds].size.width-230)/2, 20, 230, 44)];
     titleText.backgroundColor = [UIColor clearColor];
@@ -372,9 +371,13 @@
 }
 
 - (void)rightAction {
-    NEMapViewController *map = [[NEMapViewController alloc] init];
-    map.model = _model;
-    [self presentViewController:map animated:YES completion:nil];
+    NSURL *filePathURL = _model.harURL;
+    
+    if (filePathURL) {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[filePathURL]
+                                                                                             applicationActivities:nil];
+        [self presentViewController:activityViewController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Utils

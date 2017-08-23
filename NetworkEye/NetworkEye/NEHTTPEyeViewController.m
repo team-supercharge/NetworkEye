@@ -11,7 +11,10 @@
 #import "NEHTTPModel.h"
 #import "NEHTTPModelManager.h"
 #import "NEHTTPEyeDetailViewController.h"
-#import "NEHTTPEyeSettingsViewController.h"
+
+#import "HAR.h"
+#import "NEHTTPWindowManager.h"
+
 @interface NEHTTPEyeViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate> {
     UITableView *mainTableView;
     NSArray *httpRequests;
@@ -27,8 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-  
+
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor=[UIColor whiteColor];
     
@@ -41,24 +43,24 @@
     }
     UIColor *titleColor=[UIColor whiteColor];
     UIFont *titleFont=[UIFont systemFontOfSize:18.0];
-    UIColor *detailColor=[UIColor whiteColor];
-    UIFont *detailFont=[UIFont systemFontOfSize:12.0];
-    
-    NSMutableAttributedString *titleString = [[NSMutableAttributedString alloc] initWithString:@"NetworkEye\n"
+//    UIColor *detailColor=[UIColor whiteColor];
+//    UIFont *detailFont=[UIFont systemFontOfSize:12.0];
+
+    NSMutableAttributedString *titleString = [[NSMutableAttributedString alloc] initWithString:@"NetworkEye" //@"NetworkEye\n"
                                                                                     attributes:@{
                                                                                                  NSFontAttributeName : titleFont,
                                                                                                  NSForegroundColorAttributeName: titleColor
                                                                                                  }];
     
-    NSMutableAttributedString *flowCountString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"流量共%.1lfMB",flowCount]
-                                                                                        attributes:@{
-                                                                                                     NSFontAttributeName : detailFont,
-                                                                                                     NSForegroundColorAttributeName: detailColor
-                                                                                                     }];
-    
+//    NSMutableAttributedString *flowCountString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Traffic: %.1lfMB",flowCount]
+//                                                                                        attributes:@{
+//                                                                                                     NSFontAttributeName : detailFont,
+//                                                                                                     NSForegroundColorAttributeName: detailColor
+//                                                                                                     }];
+
     NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] init];
     [attrText appendAttributedString:titleString];
-    [attrText appendAttributedString:flowCountString];
+    //[attrText appendAttributedString:flowCountString];
     UILabel *titleText = [[UILabel alloc] initWithFrame: CGRectMake(([[UIScreen mainScreen] bounds].size.width-120)/2, 20, 120, 44)];
     titleText.backgroundColor = [UIColor clearColor];
     titleText.textColor=[UIColor whiteColor];
@@ -80,19 +82,19 @@
         [backBt addTarget:self action:@selector(backBtAction) forControlEvents:UIControlEventTouchUpInside];
         [bar addSubview:backBt];
         
-        UIButton *settingsBt=[UIButton buttonWithType:UIButtonTypeCustom];
-        settingsBt.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 27, 50, 30);
-        [settingsBt setTitle:@"settings" forState:UIControlStateNormal];
-        settingsBt.titleLabel.font=[UIFont systemFontOfSize:13];
-        [settingsBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [settingsBt addTarget:self action:@selector(rightAction) forControlEvents:UIControlEventTouchUpInside];
-        [bar addSubview:settingsBt];
-        mainTableView.frame=CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64);
-        [bar addSubview:titleText];
+		UIButton *exportBt=[UIButton buttonWithType:UIButtonTypeCustom];
+		exportBt.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width-60, 27, 50, 30);
+		[exportBt setTitle:@"export" forState:UIControlStateNormal];
+		exportBt.titleLabel.font=[UIFont systemFontOfSize:13];
+		[exportBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+		[exportBt addTarget:self action:@selector(exportAction) forControlEvents:UIControlEventTouchUpInside];
+		[bar addSubview:exportBt];
+		mainTableView.frame=CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64);
+		[bar addSubview:exportBt];
     }else{
         titleText.frame=CGRectMake(([[UIScreen mainScreen] bounds].size.width-120)/2, 0, 120, 44);
         [self.navigationController.navigationBar addSubview:titleText];
-        UIBarButtonItem *right=[[UIBarButtonItem alloc] initWithTitle:@"settings" style:UIBarButtonItemStylePlain target:self action:@selector(rightAction)];
+        UIBarButtonItem *right=[[UIBarButtonItem alloc] initWithTitle:@"export" style:UIBarButtonItemStylePlain target:self action:@selector(exportAction)];
         self.navigationItem.rightBarButtonItem=right;
     }
 
@@ -108,16 +110,24 @@
     [mainTableView reloadData];
 }
 
-- (void)rightAction {
-    NEHTTPEyeSettingsViewController *settings = [[NEHTTPEyeSettingsViewController alloc] init];
-    [self presentViewController:settings animated:YES completion:nil];
+- (void)exportAction {
+    if (httpRequests.count < 1) {
+        return;
+    }
+
+    NSURL *filePathURL = [HAR generateWithModelObjects:httpRequests];
+    if (filePathURL) {
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[filePathURL]
+                                                                                             applicationActivities:nil];
+        [self presentViewController:activityViewController animated:YES completion:nil];
+    }
 }
 
 - (void)setupSearch {
-    
+	
     filterHTTPRequests=[[NSArray alloc] init];
     mySearchBar = [[UISearchBar alloc] init];
-    
+	
     mySearchBar.delegate = self;
     [mySearchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [mySearchBar sizeToFit];
@@ -129,8 +139,10 @@
 
 }
 - (void)backBtAction {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+	
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NEHTTPWindowManager sharedManager] dismissWindow];
+    }];
 
 }
 

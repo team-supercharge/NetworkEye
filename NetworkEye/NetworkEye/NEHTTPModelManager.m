@@ -81,6 +81,10 @@
 
 - (void)addModel:(NEHTTPModel *) aModel {
     
+    if (_serverFilter && ![aModel.requestURLString containsString:_serverFilter]) {
+        return;
+    }
+    
     if ([aModel.responseMIMEType isEqualToString:@"text/html"]) {
         aModel.receiveJSONData=@"";
     }
@@ -88,6 +92,7 @@
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"nenetworkhttpeyecache"] isEqualToString:@"a"]) {
         [self deleteAllItem];
         [[NSUserDefaults standardUserDefaults] setObject:@"b" forKey:@"nenetworkhttpeyecache"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
     BOOL isNull;
@@ -95,11 +100,10 @@
     if (isNull) {
         aModel.receiveJSONData=@"";
     }
-    NSString *receiveJSONData;
-    receiveJSONData=[self stringToSQLFilter:aModel.receiveJSONData];
-    NSString *sql=[NSString stringWithFormat:@"insert into nenetworkhttpeyes values('%lf','%@','%@','%@','%@','%lf','%@','%@','%@','%@','%@','%@','%@','%d','%@','%@')",aModel.myID,aModel.startDateString,aModel.endDateString,aModel.requestURLString,aModel.requestCachePolicy,aModel.requestTimeoutInterval,aModel.requestHTTPMethod,aModel.requestAllHTTPHeaderFields,aModel.requestHTTPBody,aModel.responseMIMEType,aModel.responseExpectedContentLength,aModel.responseTextEncodingName,aModel.responseSuggestedFilename,aModel.responseStatusCode,[self stringToSQLFilter:aModel.responseAllHeaderFields],receiveJSONData];
     if (enablePersistent) {
 #if FMDB_SQLCipher
+        NSString *receiveJSONData=[self stringToSQLFilter:aModel.receiveJSONData];
+        NSString *sql=[NSString stringWithFormat:@"insert into nenetworkhttpeyes values('%lf','%@','%@','%@','%@','%lf','%@','%@','%@','%@','%@','%@','%@','%d','%@','%@')",aModel.myID,aModel.startDateString,aModel.endDateString,aModel.requestURLString,aModel.requestCachePolicy,aModel.requestTimeoutInterval,aModel.requestHTTPMethod,aModel.requestAllHTTPHeaderFields,aModel.requestHTTPBody,aModel.responseMIMEType,aModel.responseExpectedContentLength,aModel.responseTextEncodingName,aModel.responseSuggestedFilename,aModel.responseStatusCode,[self stringToSQLFilter:aModel.responseAllHeaderFields],receiveJSONData];
 
         FMDatabaseQueue *queue= [FMDatabaseQueue databaseQueueWithPath:[NEHTTPModelManager filename]];
         [queue inDatabase:^(FMDatabase *db) {
@@ -120,6 +124,7 @@
     if (!enablePersistent) {
         if (allRequests.count>=self.saveRequestMaxCount) {
             [[NSUserDefaults standardUserDefaults] setObject:@"a" forKey:@"nenetworkhttpeyecache"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
         return allRequests;
     }
@@ -155,6 +160,7 @@
     
     if (array.count>=self.saveRequestMaxCount) {
         [[NSUserDefaults standardUserDefaults] setObject:@"a" forKey:@"nenetworkhttpeyecache"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     return array;
@@ -168,8 +174,8 @@
         [allRequests removeAllObjects];
         return;
     }
-    NSString *sql=[NSString stringWithFormat:@"delete from nenetworkhttpeyes"];
 #if FMDB_SQLCipher
+    NSString *sql=[NSString stringWithFormat:@"delete from nenetworkhttpeyes"];
 
     FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:[NEHTTPModelManager filename]];
     [queue inDatabase:^(FMDatabase *db) {
