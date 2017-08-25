@@ -10,7 +10,6 @@
 
 #import "NEHTTPModel.h"
 #import "NEHTTPModelManager.h"
-#import "UIWindow+NEExtension.h"
 #import "NEURLSessionConfiguration.h"
 #import "NEKeyboardShortcutManager.h"
 #import "NEHTTPEyeViewController.h"
