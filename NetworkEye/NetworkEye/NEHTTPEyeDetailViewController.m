@@ -55,8 +55,10 @@
     [titleText setFont:[UIFont systemFontOfSize:13.0]];
     titleText.textAlignment=NSTextAlignmentCenter;
     [bar addSubview:titleText];
-    titleText.text=_model.requestURLString;
-    
+
+    NSString *removablePart = [NSString stringWithFormat:@"%@://%@", _model.ne_request.URL.scheme, _model.ne_request.URL.host];
+    titleText.text=[_model.requestURLString stringByReplacingOccurrencesOfString:removablePart withString:@""];
+
     mainTextView=[[UITextView alloc] initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64)];
     [self.view addSubview:mainTextView];
     mainTextView.editable=NO;

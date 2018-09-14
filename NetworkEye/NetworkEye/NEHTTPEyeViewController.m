@@ -35,6 +35,8 @@
     self.view.backgroundColor=[UIColor whiteColor];
     
     mainTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64) style:UITableViewStylePlain];
+    mainTableView.rowHeight = UITableViewAutomaticDimension;
+    mainTableView.estimatedRowHeight = 44.0;
     [self.view addSubview:mainTableView];
     
     double flowCount=[[[NSUserDefaults standardUserDefaults] objectForKey:@"flowCount"] doubleValue];
@@ -76,7 +78,7 @@
         
         UIButton *backBt=[UIButton buttonWithType:UIButtonTypeCustom];
         backBt.frame=CGRectMake(10, 27, 40, 30);
-        [backBt setTitle:@"back" forState:UIControlStateNormal];
+        [backBt setTitle:@"close" forState:UIControlStateNormal];
         backBt.titleLabel.font=[UIFont systemFontOfSize:15];
         [backBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [backBt addTarget:self action:@selector(backBtAction) forControlEvents:UIControlEventTouchUpInside];
@@ -168,8 +170,10 @@
     cell.textLabel.font=[UIFont systemFontOfSize:12];
     cell.textLabel.textColor=[UIColor colorWithRed:0.24f green:0.51f blue:0.78f alpha:1.00f];
     NEHTTPModel *currenModel=[self modelForTableView:tableView atIndexPath:indexPath];
-    
-    cell.textLabel.text=currenModel.requestURLString;
+
+    cell.textLabel.numberOfLines = 0;
+    NSString *removablePart = [NSString stringWithFormat:@"%@://%@", currenModel.ne_request.URL.scheme, currenModel.ne_request.URL.host];
+    cell.textLabel.text=[currenModel.requestURLString stringByReplacingOccurrencesOfString:removablePart withString:@""];
 
     NSAttributedString *responseStatusCode;
     NSAttributedString *requestHTTPMethod;
